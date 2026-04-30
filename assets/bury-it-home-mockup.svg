@@ -1,0 +1,113 @@
+<svg width="1400" height="1800" viewBox="0 0 1400 1800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="180" y1="80" x2="1220" y2="1700" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#17161D"/>
+      <stop offset="0.5" stop-color="#0E0E13"/>
+      <stop offset="1" stop-color="#06070A"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="300" y1="220" x2="1070" y2="1540" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1D1F27" stop-opacity="0.96"/>
+      <stop offset="1" stop-color="#101117" stop-opacity="0.98"/>
+    </linearGradient>
+    <linearGradient id="hero" x1="290" y1="250" x2="1080" y2="620" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#252833"/>
+      <stop offset="1" stop-color="#171920"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#E2CD8F"/>
+      <stop offset="1" stop-color="#A88A42"/>
+    </linearGradient>
+    <filter id="shadow" x="180" y="120" width="1040" height="1580" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="24" stdDeviation="28" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1400" height="1800" fill="url(#bg)"/>
+  <circle cx="1130" cy="210" r="190" fill="#1C2430" fill-opacity="0.36"/>
+  <circle cx="260" cy="1540" r="240" fill="#162028" fill-opacity="0.28"/>
+  <circle cx="1090" cy="1320" r="150" fill="#1B1612" fill-opacity="0.24"/>
+
+  <g filter="url(#shadow)">
+    <rect x="220" y="140" width="960" height="1520" rx="56" fill="url(#panel)"/>
+    <rect x="252" y="172" width="896" height="1456" rx="42" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
+  </g>
+
+  <text x="300" y="258" fill="#E8E2D2" font-size="44" font-family="Georgia, serif" font-weight="700">Bury It!</text>
+  <text x="300" y="296" fill="#908A80" font-size="22" font-family="Arial, sans-serif">Bury what you can't delete.</text>
+  <circle cx="1086" cy="244" r="26" fill="#191B22" stroke="#2F3340" stroke-width="2"/>
+  <path d="M1072 244H1100" stroke="#C8B06A" stroke-width="3" stroke-linecap="round"/>
+  <path d="M1086 230V258" stroke="#C8B06A" stroke-width="3" stroke-linecap="round"/>
+
+  <rect x="286" y="344" width="828" height="286" rx="30" fill="url(#hero)"/>
+  <rect x="286" y="344" width="828" height="286" rx="30" stroke="#2D313E" stroke-width="2"/>
+  <text x="334" y="422" fill="url(#gold)" font-size="20" font-family="Arial, sans-serif" letter-spacing="2">ANONYMOUS GRAVEYARD</text>
+  <text x="334" y="486" fill="#F5F1E8" font-size="54" font-family="Georgia, serif" font-weight="700">Let it rest.</text>
+  <text x="334" y="536" fill="#B3B0A7" font-size="24" font-family="Arial, sans-serif">No photos. No names. Only the things people are finally</text>
+  <text x="334" y="570" fill="#B3B0A7" font-size="24" font-family="Arial, sans-serif">ready to put away.</text>
+  <rect x="334" y="596" width="248" height="46" rx="23" fill="#C9A962" fill-opacity="0.12"/>
+  <text x="364" y="626" fill="#DDC17A" font-size="20" font-family="Arial, sans-serif">22,481 burials resting</text>
+
+  <text x="300" y="714" fill="#9C988F" font-size="20" font-family="Arial, sans-serif" letter-spacing="1.6">EXPLORE</text>
+  <rect x="286" y="740" width="260" height="58" rx="29" fill="#D6BF84"/>
+  <text x="362" y="777" fill="#16130D" font-size="24" font-family="Arial, sans-serif" font-weight="700">Recent</text>
+  <rect x="570" y="740" width="260" height="58" rx="29" fill="#181A21" stroke="#2C313D" stroke-width="2"/>
+  <text x="648" y="777" fill="#C9C5BA" font-size="24" font-family="Arial, sans-serif" font-weight="700">Popular</text>
+  <rect x="854" y="740" width="260" height="58" rx="29" fill="#181A21" stroke="#2C313D" stroke-width="2"/>
+  <text x="918" y="777" fill="#C9C5BA" font-size="24" font-family="Arial, sans-serif" font-weight="700">Categories</text>
+
+  <rect x="286" y="838" width="828" height="228" rx="28" fill="#15171D" stroke="#2A2D37" stroke-width="2"/>
+  <text x="328" y="892" fill="#D0B26D" font-size="18" font-family="Arial, sans-serif" letter-spacing="1.4">PAST LOVE</text>
+  <text x="328" y="948" fill="#F1EBDD" font-size="40" font-family="Georgia, serif" font-weight="700">The last message I never deleted</text>
+  <text x="328" y="994" fill="#B0ABA1" font-size="22" font-family="Arial, sans-serif">"I kept rereading it long after it stopped meaning the same thing."</text>
+  <rect x="328" y="1018" width="164" height="38" rx="19" fill="#1E222B"/>
+  <text x="362" y="1043" fill="#D6D0C2" font-size="18" font-family="Arial, sans-serif">Epitaph</text>
+  <text x="514" y="1043" fill="#8F8B82" font-size="18" font-family="Arial, sans-serif">Some endings decay slowly.</text>
+  <text x="948" y="892" fill="#8F8B82" font-size="18" font-family="Arial, sans-serif">2h ago</text>
+  <text x="328" y="1094" fill="#C8C3B8" font-size="20" font-family="Arial, sans-serif">Light a Candle</text>
+  <text x="548" y="1094" fill="#C8C3B8" font-size="20" font-family="Arial, sans-serif">Leave Flowers</text>
+  <text x="772" y="1094" fill="#C8C3B8" font-size="20" font-family="Arial, sans-serif">Pay Respect</text>
+  <text x="1020" y="1094" fill="#DABB71" font-size="20" font-family="Arial, sans-serif">318</text>
+
+  <rect x="286" y="1098" width="828" height="228" rx="28" fill="#15171D" stroke="#2A2D37" stroke-width="2"/>
+  <text x="328" y="1152" fill="#8CB5D8" font-size="18" font-family="Arial, sans-serif" letter-spacing="1.4">OLD SELF</text>
+  <text x="328" y="1208" fill="#F1EBDD" font-size="40" font-family="Georgia, serif" font-weight="700">Drafts from the person I used to be</text>
+  <text x="328" y="1254" fill="#B0ABA1" font-size="22" font-family="Arial, sans-serif">"I found old notes full of plans I no longer recognize as mine."</text>
+  <rect x="328" y="1278" width="164" height="38" rx="19" fill="#1E222B"/>
+  <text x="362" y="1303" fill="#D6D0C2" font-size="18" font-family="Arial, sans-serif">Epitaph</text>
+  <text x="514" y="1303" fill="#8F8B82" font-size="18" font-family="Arial, sans-serif">Buried with tenderness.</text>
+  <text x="948" y="1152" fill="#8F8B82" font-size="18" font-family="Arial, sans-serif">5h ago</text>
+  <text x="328" y="1354" fill="#C8C3B8" font-size="20" font-family="Arial, sans-serif">Light a Candle</text>
+  <text x="548" y="1354" fill="#C8C3B8" font-size="20" font-family="Arial, sans-serif">Leave Flowers</text>
+  <text x="772" y="1354" fill="#C8C3B8" font-size="20" font-family="Arial, sans-serif">Pay Respect</text>
+  <text x="1020" y="1354" fill="#DABB71" font-size="20" font-family="Arial, sans-serif">204</text>
+
+  <rect x="286" y="1370" width="828" height="126" rx="28" fill="#111319" stroke="#2A2D37" stroke-width="2"/>
+  <text x="330" y="1420" fill="#A09A8E" font-size="18" font-family="Arial, sans-serif" letter-spacing="1.4">QUICK BURIAL</text>
+  <text x="330" y="1464" fill="#E7E1D3" font-size="28" font-family="Georgia, serif" font-weight="700">Start a private burial</text>
+  <rect x="892" y="1402" width="188" height="62" rx="31" fill="#D6BF84"/>
+  <text x="946" y="1441" fill="#17130C" font-size="24" font-family="Arial, sans-serif" font-weight="700">Bury</text>
+
+  <line x1="318" y1="1544" x2="1082" y2="1544" stroke="#20232C" stroke-width="2"/>
+  <g opacity="0.95">
+    <circle cx="364" cy="1598" r="8" fill="#D6BF84"/>
+    <text x="332" y="1642" fill="#F0E8D7" font-size="20" font-family="Arial, sans-serif">Graveyard</text>
+    <circle cx="596" cy="1602" r="8" fill="#71707A"/>
+    <text x="582" y="1642" fill="#8E8A83" font-size="20" font-family="Arial, sans-serif">Bury</text>
+    <circle cx="804" cy="1602" r="8" fill="#71707A"/>
+    <text x="770" y="1642" fill="#8E8A83" font-size="20" font-family="Arial, sans-serif">My Graves</text>
+    <circle cx="1038" cy="1602" r="8" fill="#71707A"/>
+    <text x="1010" y="1642" fill="#8E8A83" font-size="20" font-family="Arial, sans-serif">Profile</text>
+  </g>
+
+  <g filter="url(#glow)">
+    <circle cx="1012" cy="1090" r="4" fill="#D9BB72"/>
+    <circle cx="1008" cy="1348" r="4" fill="#D9BB72"/>
+  </g>
+</svg>

@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>VoltLoop</title>
+    <link rel="stylesheet" href="./styles.css?v=47" />
+  </head>
+  <body>
+    <section id="menuOverlay" class="menu-overlay">
+      <div class="menu-card">
+        <div class="menu-logo" aria-hidden="true">
+          <span class="brand-mark"></span>
+        </div>
+        <span class="eyebrow">Neon circuit puzzle</span>
+        <h1>VoltLoop</h1>
+        <p>Rotate the wires, carry the current from battery to bulb, and beat your best time on every level.</p>
+        <div class="menu-difficulties" aria-label="Starting difficulty">
+          <button class="menu-difficulty is-active" type="button" data-difficulty="easy">Easy <span>10</span></button>
+          <button class="menu-difficulty" type="button" data-difficulty="medium">Medium <span>20</span></button>
+          <button class="menu-difficulty" type="button" data-difficulty="hard">Hard <span>30</span></button>
+          <button class="menu-difficulty" type="button" data-difficulty="impossible">Impossible <span>20</span></button>
+          <button class="menu-difficulty" type="button" data-difficulty="edison">Edison <span>20</span></button>
+        </div>
+        <p class="menu-note">100 handcrafted-style levels ready. More episodes coming.</p>
+        <div class="menu-actions">
+          <button id="playButton" class="primary-button" type="button">Play</button>
+          <button id="continueButton" class="tool-button" type="button">Continue</button>
+          <button id="soundToggle" class="tool-button sound-toggle is-on" type="button" aria-pressed="true">Sound On</button>
+        </div>
+        <div class="legal-links">
+          <button class="link-button" type="button" data-legal="privacy">Privacy Policy</button>
+          <button class="link-button" type="button" data-legal="terms">Terms of Use</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="legalOverlay" class="legal-overlay is-hidden" aria-modal="true" role="dialog">
+      <article class="legal-card">
+        <button id="legalCloseButton" class="legal-close" type="button" aria-label="Close">×</button>
+        <div id="privacyPanel" class="legal-panel">
+          <span class="eyebrow">VoltLoop</span>
+          <h2>Privacy Policy</h2>
+          <p>VoltLoop stores gameplay progress, best time, moves, score, level unlocks, and premium unlock status locally on this device.</p>
+          <p>In-App Purchase payments are processed by Apple. VoltLoop does not collect, transmit, sell, or share personal data in this version.</p>
+        </div>
+        <div id="termsPanel" class="legal-panel" hidden>
+          <span class="eyebrow">VoltLoop</span>
+          <h2>Terms of Use</h2>
+          <p>VoltLoop is provided as a puzzle game for personal entertainment. The first 10 levels are free, and the remaining episodes can be unlocked with a one-time In-App Purchase.</p>
+          <p>The game is provided without warranty. Do not copy, resell, or redistribute the app assets or code without permission.</p>
+        </div>
+      </article>
+    </section>
+
+    <section id="paywallOverlay" class="legal-overlay is-hidden" aria-modal="true" role="dialog">
+      <article class="legal-card paywall-card">
+        <button id="paywallCloseButton" class="legal-close" type="button" aria-label="Close">×</button>
+        <span class="eyebrow">VoltLoop Premium</span>
+        <h2>Unlock premium episodes</h2>
+        <p>Play the first 10 levels free. Get access to the remaining 90 levels, Edison episodes, advanced circuits, and future episode drops. Levels still unlock one by one as you progress.</p>
+        <div class="price-row">
+          <strong>$2.99</strong>
+          <span>one-time unlock</span>
+        </div>
+        <button id="unlockButton" class="primary-button" type="button">Unlock for $2.99</button>
+        <p id="paywallMessage" class="paywall-message">On iOS this button will connect to App Store In-App Purchase. In this test build it unlocks locally.</p>
+      </article>
+    </section>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#game" aria-label="VoltLoop">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>VoltLoop</span>
+        </a>
+        <div class="topbar-actions">
+          <button id="menuButton" class="tool-button" type="button">Menu</button>
+          <button id="hintButton" class="tool-button" type="button">Hint</button>
+          <button id="resetButton" class="tool-button" type="button">Restart</button>
+        </div>
+      </header>
+
+      <main id="game" class="game-shell">
+        <section class="hero">
+          <div class="hero-copy">
+            <p id="levelEyebrow" class="eyebrow">Level 1</p>
+            <h1>VoltLoop</h1>
+            <p>Tap tiles, rotate wires, and build an unbroken circuit from battery to bulb.</p>
+          </div>
+
+          <aside class="status-panel" aria-label="Game status">
+            <div class="meter-card">
+              <span class="mini-label">Moves</span>
+              <strong id="moveCount">0</strong>
+            </div>
+            <div id="timeCard" class="meter-card">
+              <span class="mini-label">Time</span>
+              <strong id="timeCount">00:00</strong>
+            </div>
+            <div class="meter-card lamp-meter">
+              <span class="mini-label">Bulb</span>
+              <strong id="lampState">Off</strong>
+            </div>
+          </aside>
+        </section>
+
+        <section class="workbench">
+          <div class="board-wrap">
+            <canvas id="circuitCanvas" width="720" height="720" aria-label="Rotatable electric circuit game board"></canvas>
+            <div id="winOverlay" class="win-overlay" hidden>
+              <div>
+                <span class="mini-label">Circuit complete</span>
+                <h2>Bulb lit.</h2>
+                <p id="scoreText"></p>
+                <button id="nextButton" class="primary-button" type="button">Next Level</button>
+              </div>
+            </div>
+            <div id="failOverlay" class="win-overlay fail-overlay" hidden>
+              <div>
+                <span class="mini-label">Power failed</span>
+                <h2>Try again.</h2>
+                <p id="failText">The circuit overloaded.</p>
+                <button id="retryButton" class="primary-button" type="button">Restart Level</button>
+              </div>
+            </div>
+          </div>
+
+          <aside class="lab-panel">
+            <div class="level-card">
+              <div class="level-card-head">
+                <div>
+                  <span class="mini-label">Level Select</span>
+                  <h2 id="levelTitle">Easy 1</h2>
+                </div>
+              </div>
+              <div id="difficultyTabs" class="difficulty-tabs" aria-label="Select difficulty">
+                <button type="button" data-difficulty="easy">Easy</button>
+                <button type="button" data-difficulty="medium">Medium</button>
+                <button type="button" data-difficulty="hard">Hard</button>
+                <button type="button" data-difficulty="impossible">Impossible</button>
+                <button type="button" data-difficulty="edison">Edison</button>
+              </div>
+              <div id="levelGrid" class="level-grid"></div>
+              <div class="record-row">
+                <span>Best</span>
+                <strong id="recordText">No record yet</strong>
+              </div>
+            </div>
+
+            <div class="lab-visual" aria-hidden="true">
+              <div class="battery">
+                <span>+</span>
+                <span>-</span>
+              </div>
+              <div id="benchWire" class="bench-wire"></div>
+              <div id="benchBulb" class="bench-bulb">
+                <span></span>
+              </div>
+            </div>
+
+            <div class="rules">
+              <h2>How to Play</h2>
+              <p>Each tap rotates one wire by 90 degrees. Splitters feed multiple bulbs, timed levels drain power, and red or short-circuit pieces can overload the board.</p>
+              <div class="chip-row">
+                <span>Straight</span>
+                <span>Corner</span>
+                <span>T-junction</span>
+                <span>Splitter</span>
+                <span>Overload</span>
+              </div>
+            </div>
+
+            <div class="daily-card">
+              <span class="mini-label">Progress</span>
+              <p id="progressText">0 of 100 levels completed.</p>
+            </div>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js?v=47"></script>
+  </body>
+</html>
