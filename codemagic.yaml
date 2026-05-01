@@ -8,7 +8,7 @@ workflows:
         distribution_type: app_store
         bundle_identifier: com.catduel.voltloop
       vars:
-        XCODE_WORKSPACE: ios/App/App.xcworkspace
+        XCODE_WORKSPACE: App.xcworkspace
         XCODE_SCHEME: App
     scripts:
       - name: Install dependencies
