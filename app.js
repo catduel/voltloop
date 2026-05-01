@@ -1115,15 +1115,19 @@ paywallOverlay.addEventListener("click", (event) => {
 
 unlockButton.addEventListener("click", async () => {
   playMenuSound();
-  if (window.VoltLoopPurchases?.purchasePremium) {
-    try {
-      const result = await window.VoltLoopPurchases.purchasePremium("voltloop_full_unlock");
-      if (!result?.success) return;
-    } catch {
-      paywallMessage.textContent = "Purchase could not be completed. Please try again.";
-      return;
-    }
+  if (!window.VoltLoopPurchases?.purchasePremium) {
+    paywallMessage.textContent = "In-App Purchase is not available in this build yet. Please try again from TestFlight after StoreKit is connected.";
+    return;
   }
+
+  try {
+    const result = await window.VoltLoopPurchases.purchasePremium("voltloop_full_unlock");
+    if (!result?.success) return;
+  } catch {
+    paywallMessage.textContent = "Purchase could not be completed. Please try again.";
+    return;
+  }
+
   setPremiumUnlocked();
   paywallOverlay.classList.add("is-hidden");
   paywallMessage.textContent = "Premium unlocked on this device.";

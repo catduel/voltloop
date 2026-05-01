@@ -298,6 +298,72 @@
 }
 
 @media (max-width: 640px) {
+  .menu-overlay {
+    background:
+      radial-gradient(circle at 50% 34%, rgba(102, 244, 255, 0.22), transparent 28%),
+      linear-gradient(180deg, #0b1424, #07111c);
+  }
+
+  .app-shell {
+    height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    overflow: hidden;
+  }
+
+  .topbar {
+    padding: 6px 112px 6px 6px;
+  }
+
+  .topbar-actions {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    display: grid;
+    grid-template-columns: repeat(3, 30px);
+    width: 100px;
+    justify-content: end;
+    gap: 5px;
+  }
+
+  .hero-copy h1 {
+    font-size: 20px;
+  }
+
+  .workbench {
+    grid-template-rows: auto 86px;
+  }
+
+  .board-wrap,
+  #circuitCanvas {
+    width: min(calc(100vw - 48px), calc(100dvh - 340px));
+    max-width: calc(100vw - 48px);
+  }
+
+  #circuitCanvas {
+    height: min(calc(100vw - 48px), calc(100dvh - 340px));
+  }
+
+  .lab-panel {
+    height: 86px;
+    min-height: 86px;
+    overflow: hidden;
+    align-self: end;
+  }
+
+  .level-card {
+    height: 68px;
+    overflow: hidden;
+  }
+
+  .difficulty-tabs,
+  .level-grid,
+  .record-row,
+  .rules,
+  .daily-card {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
   html,
   body {
     width: 100%;
