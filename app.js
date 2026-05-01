@@ -130,6 +130,7 @@ let moves = 0;
 let startedAt = Date.now();
 let timerId = null;
 let spinnerId = null;
+let winRevealTimer = null;
 let solved = false;
 let failed = false;
 let hintedCell = null;
@@ -448,6 +449,7 @@ function buildBoard() {
   moves = 0;
   solved = false;
   failed = false;
+  clearTimeout(winRevealTimer);
   hintedCell = null;
   timeLimitMs = currentRules.timed ? currentRules.timeLimit * 1000 : 0;
   startedAt = Date.now();
@@ -829,7 +831,9 @@ function updateCircuit(showWin = true) {
     const isRecord = saveRecord({ elapsedMs, moves, score, completedAt: new Date().toISOString() });
     unlockNextLevel();
     scoreText.textContent = `${formatTime(elapsedMs)} time, ${moves} moves, ${score} score.${isRecord ? " New best!" : ""}`;
-    winOverlay.hidden = false;
+    winRevealTimer = setTimeout(() => {
+      winOverlay.hidden = false;
+    }, 1500);
     renderLevelUI();
   }
 }
@@ -837,6 +841,7 @@ function updateCircuit(showWin = true) {
 function failLevel(message) {
   if (failed || solved) return;
   failed = true;
+  clearTimeout(winRevealTimer);
   clearInterval(timerId);
   clearInterval(spinnerId);
   playFailSound();
@@ -1196,6 +1201,16 @@ function drawBattery(cx, cy, tile) {
 }
 
 function drawLamp(cx, cy, tile, on) {
+  if (on) {
+    const glow = ctx.createRadialGradient(cx, cy - tile * 0.04, tile * 0.08, cx, cy - tile * 0.04, tile * 0.58);
+    glow.addColorStop(0, "rgba(255, 239, 128, 0.76)");
+    glow.addColorStop(0.45, "rgba(255, 216, 78, 0.22)");
+    glow.addColorStop(1, "rgba(255, 216, 78, 0)");
+    ctx.fillStyle = glow;
+    ctx.beginPath();
+    ctx.arc(cx, cy - tile * 0.04, tile * 0.58, 0, Math.PI * 2);
+    ctx.fill();
+  }
   ctx.strokeStyle = "#06080c";
   ctx.lineWidth = 4;
   ctx.fillStyle = on ? "#ffe36e" : "#243048";

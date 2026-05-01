@@ -2561,24 +2561,25 @@ body.is-appstore-shot .meter-card strong {
 body.is-appstore-shot .workbench {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto 92px;
-  gap: 10px;
+  grid-template-rows: minmax(0, 1fr);
+  gap: 0;
   min-height: 0;
 }
 
 body.is-appstore-shot .board-wrap {
   justify-self: center;
   align-self: start;
+  margin-top: 8px;
 }
 
 body.is-appstore-shot .board-wrap,
 body.is-appstore-shot #circuitCanvas {
-  width: min(380px, calc(100vw - 42px), calc(100dvh - 320px));
-  max-width: min(380px, calc(100vw - 42px));
+  width: min(390px, calc(100vw - 34px), calc(100dvh - 250px));
+  max-width: min(390px, calc(100vw - 34px));
 }
 
 body.is-appstore-shot #circuitCanvas {
-  height: min(380px, calc(100vw - 42px), calc(100dvh - 320px));
+  height: min(390px, calc(100vw - 34px), calc(100dvh - 250px));
 }
 
 body.is-appstore-shot .lab-panel {
@@ -2834,22 +2835,33 @@ body {
 }
 
 @media (max-width: 760px) {
+  .game-shell {
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  .hero {
+    margin-bottom: 4px;
+  }
+
   .workbench {
     grid-template-rows: minmax(0, 1fr);
+    align-items: start;
+    gap: 0;
   }
 
   .board-wrap {
-    align-self: center;
+    align-self: start;
+    margin-top: 8px;
   }
 
   .board-wrap,
   #circuitCanvas {
-    width: min(380px, calc(100vw - 42px), calc(100dvh - 285px));
-    max-width: min(380px, calc(100vw - 42px));
+    width: min(390px, calc(100vw - 34px), calc(100dvh - 245px));
+    max-width: min(390px, calc(100vw - 34px));
   }
 
   #circuitCanvas {
-    height: min(380px, calc(100vw - 42px), calc(100dvh - 285px));
+    height: min(390px, calc(100vw - 34px), calc(100dvh - 245px));
   }
 
   .lab-panel {
