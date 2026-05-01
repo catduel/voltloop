@@ -33,7 +33,7 @@ workflows:
       - name: Set build number
         script: |
           cd ios/App
-          agvtool new-version -all 5
+          agvtool new-version -all 6
       - name: Set up code signing
         script: |
           xcode-project use-profiles

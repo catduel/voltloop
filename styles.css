@@ -2490,3 +2490,181 @@ body.is-timed-level .board-wrap::after {
     min-height: 46px;
   }
 }
+
+body.is-appstore-shot {
+  overflow: hidden;
+  background: #07111c;
+}
+
+body.is-appstore-shot .app-shell {
+  width: 100vw;
+  max-width: none;
+  height: 100dvh;
+  margin: 0;
+  overflow: hidden;
+}
+
+body.is-appstore-shot .topbar {
+  position: relative;
+  top: 0;
+  min-height: 54px;
+  margin-bottom: 8px;
+  padding: 8px 12px;
+}
+
+body.is-appstore-shot .topbar-actions {
+  display: none;
+}
+
+body.is-appstore-shot .game-shell {
+  height: calc(100dvh - 66px);
+  padding-top: 0;
+  overflow: hidden;
+}
+
+body.is-appstore-shot .hero {
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+body.is-appstore-shot .hero-copy {
+  min-height: 0;
+  padding: 10px 14px;
+}
+
+body.is-appstore-shot .hero-copy h1 {
+  margin-top: 2px;
+  font-size: 28px;
+}
+
+body.is-appstore-shot .hero-copy p:not(.eyebrow),
+body.is-appstore-shot .hero-copy::after {
+  display: none;
+}
+
+body.is-appstore-shot .status-panel {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  padding: 8px;
+}
+
+body.is-appstore-shot .meter-card {
+  min-width: 0;
+  padding: 10px;
+}
+
+body.is-appstore-shot .meter-card strong {
+  font-size: 24px;
+}
+
+body.is-appstore-shot .workbench {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 92px;
+  gap: 10px;
+  min-height: 0;
+}
+
+body.is-appstore-shot .board-wrap {
+  justify-self: center;
+  align-self: start;
+}
+
+body.is-appstore-shot .board-wrap,
+body.is-appstore-shot #circuitCanvas {
+  width: min(calc(100vw - 24px), calc(100dvh - 320px));
+  max-width: calc(100vw - 24px);
+}
+
+body.is-appstore-shot #circuitCanvas {
+  height: min(calc(100vw - 24px), calc(100dvh - 320px));
+}
+
+body.is-appstore-shot .lab-panel {
+  height: 92px;
+  min-height: 92px;
+  overflow: hidden;
+}
+
+body.is-appstore-shot .level-card {
+  height: 72px;
+  overflow: hidden;
+}
+
+body.is-appstore-shot .difficulty-tabs,
+body.is-appstore-shot .level-grid,
+body.is-appstore-shot .record-row,
+body.is-appstore-shot .rules,
+body.is-appstore-shot .daily-card,
+body.is-appstore-shot .lab-visual {
+  display: none;
+}
+
+html,
+body,
+button,
+#circuitCanvas {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.level-card-head {
+  cursor: pointer;
+}
+
+@media (max-width: 760px) {
+  .lab-panel {
+    height: 78px;
+    min-height: 78px;
+    overflow: hidden;
+    transition: height 160ms ease;
+  }
+
+  .level-card {
+    height: 62px;
+    overflow: hidden;
+  }
+
+  .lab-panel.is-expanded {
+    height: min(230px, 32dvh);
+    min-height: min(230px, 32dvh);
+    overflow: auto;
+  }
+
+  .lab-panel.is-expanded .level-card {
+    height: auto;
+    min-height: 100%;
+    overflow: visible;
+  }
+
+  .lab-panel.is-expanded .difficulty-tabs {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 5px;
+  }
+
+  .lab-panel.is-expanded .difficulty-tabs button {
+    min-height: 32px;
+    padding: 0 4px;
+    border-radius: 11px;
+    font-size: 10px;
+  }
+
+  .lab-panel.is-expanded .level-grid {
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: 4px;
+    max-height: 84px;
+    overflow: auto;
+  }
+
+  .lab-panel.is-expanded .record-row {
+    display: flex;
+  }
+}

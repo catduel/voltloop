@@ -25,6 +25,8 @@ const difficultyTabs = document.querySelector("#difficultyTabs");
 const levelEyebrow = document.querySelector("#levelEyebrow");
 const levelTitle = document.querySelector("#levelTitle");
 const levelGrid = document.querySelector("#levelGrid");
+const labPanel = document.querySelector(".lab-panel");
+const levelCardHead = document.querySelector(".level-card-head");
 const recordText = document.querySelector("#recordText");
 const progressText = document.querySelector("#progressText");
 const legalOverlay = document.querySelector("#legalOverlay");
@@ -39,8 +41,9 @@ const paywallMessage = document.querySelector("#paywallMessage");
 
 const PREMIUM_PRODUCT_ID = "voltloop_full_unlock";
 const RECORD_KEY = "circuitGlowRecords.v1";
-const PURCHASE_KEY = "voltLoopPremiumUnlocked.v1";
+const PURCHASE_KEY = "voltLoopPremiumUnlocked.v2";
 const UNLOCK_KEY = "voltLoopHighestUnlocked.v1";
+const CURRENT_LEVEL_KEY = "voltLoopCurrentLevel.v1";
 const FREE_LEVELS = 10;
 const DIFFICULTIES = {
   easy: { label: "Easy", shortLabel: "Easy", count: 10, size: 6, decoy: 0.26, minPath: 8 },
@@ -126,6 +129,25 @@ let audioContext = null;
 let currentTheme = THEMES[0];
 let currentRules = null;
 let timeLimitMs = 0;
+let lastTouchEnd = 0;
+
+document.addEventListener(
+  "touchend",
+  (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd <= 350) event.preventDefault();
+    lastTouchEnd = now;
+  },
+  { passive: false },
+);
+
+document.addEventListener(
+  "dblclick",
+  (event) => {
+    event.preventDefault();
+  },
+  { passive: false },
+);
 
 const DIRS = {
   n: { dr: -1, dc: 0, opposite: "s" },
@@ -418,6 +440,7 @@ function buildBoard() {
   startedAt = Date.now();
   winOverlay.hidden = true;
   failOverlay.hidden = true;
+  saveCurrentLevel();
   renderLevelUI();
   startTimer();
   startSpinners();
@@ -489,6 +512,10 @@ function setPremiumUnlocked() {
   renderLevelUI();
 }
 
+function saveCurrentLevel() {
+  localStorage.setItem(CURRENT_LEVEL_KEY, JSON.stringify({ difficulty: currentDifficulty, level: currentLevel }));
+}
+
 function globalLevelIndex(difficulty, level) {
   let index = 0;
   for (const [key, config] of Object.entries(DIFFICULTIES)) {
@@ -505,6 +532,18 @@ function levelFromGlobalIndex(globalIndex) {
     remaining -= config.count;
   }
   return { difficulty: "easy", level: 1 };
+}
+
+function getSavedCurrentLevel() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(CURRENT_LEVEL_KEY));
+    if (!saved || !DIFFICULTIES[saved.difficulty]) return null;
+    const level = Number(saved.level);
+    if (!Number.isInteger(level) || level < 1 || level > DIFFICULTIES[saved.difficulty].count) return null;
+    return { difficulty: saved.difficulty, level };
+  } catch {
+    return null;
+  }
 }
 
 function getHighestUnlocked() {
@@ -527,6 +566,66 @@ function canOpenLevel(difficulty, level) {
   const index = globalLevelIndex(difficulty, level);
   if (index > getHighestUnlocked()) return false;
   return index <= FREE_LEVELS || isPremiumUnlocked();
+}
+
+function getLastPlayableLevelForDifficulty(difficulty) {
+  const config = DIFFICULTIES[difficulty];
+  if (!config) return 1;
+  let lastPlayable = 1;
+  for (let level = 1; level <= config.count; level += 1) {
+    if (canOpenLevel(difficulty, level)) lastPlayable = level;
+  }
+  return lastPlayable;
+}
+
+function getNextLevelAfter(difficulty, level) {
+  const config = DIFFICULTIES[difficulty];
+  if (!config) return null;
+  if (level < config.count) return { difficulty, level: level + 1 };
+
+  const keys = Object.keys(DIFFICULTIES);
+  const nextDifficulty = keys[keys.indexOf(difficulty) + 1];
+  return nextDifficulty ? { difficulty: nextDifficulty, level: 1 } : null;
+}
+
+function getResumeTarget(levelInfo, { allowLockedPremium = false } = {}) {
+  if (!levelInfo) return null;
+  const completed = Boolean(recordFor(levelInfo.difficulty, levelInfo.level));
+  const next = completed ? getNextLevelAfter(levelInfo.difficulty, levelInfo.level) : null;
+  const target = next || levelInfo;
+  if (canOpenLevel(target.difficulty, target.level)) return target;
+  if (allowLockedPremium && globalLevelIndex(target.difficulty, target.level) > FREE_LEVELS && !isPremiumUnlocked()) return target;
+  return levelInfo;
+}
+
+function getContinueLevel({ allowLockedPremium = false } = {}) {
+  const saved = getSavedCurrentLevel();
+  const resume = getResumeTarget(saved, { allowLockedPremium });
+  if (resume && (allowLockedPremium || canOpenLevel(resume.difficulty, resume.level))) return resume;
+
+  const highest = isPremiumUnlocked() ? getHighestUnlocked() : Math.min(getHighestUnlocked(), FREE_LEVELS);
+  return levelFromGlobalIndex(Math.max(1, highest));
+}
+
+function startLevel(difficulty, level, { hideMenu = false, sound = true } = {}) {
+  if (!canOpenLevel(difficulty, level)) {
+    const targetIndex = globalLevelIndex(difficulty, level);
+    openPaywall(
+      targetIndex > FREE_LEVELS && !isPremiumUnlocked()
+        ? "Unlock VoltLoop Premium for $2.99 to play levels beyond the free pack."
+        : "Complete the previous level first.",
+    );
+    renderLevelUI();
+    return false;
+  }
+
+  currentDifficulty = difficulty;
+  currentLevel = level;
+  selectedMenuDifficulty = difficulty;
+  if (sound) playMenuSound();
+  buildBoard();
+  if (hideMenu) menuOverlay.classList.add("is-hidden");
+  return true;
 }
 
 function openPaywall(message = "Unlock VoltLoop Premium to continue beyond the free levels. Levels still open one by one as you progress.") {
@@ -813,6 +912,7 @@ function nextLevel() {
   }
   currentDifficulty = nextDifficulty;
   currentLevel = nextLevelNumber;
+  selectedMenuDifficulty = nextDifficulty;
   buildBoard();
 }
 
@@ -1115,9 +1215,10 @@ hintButton.addEventListener("click", () => {
   drawBoard();
 });
 
-function chooseDifficulty(difficulty) {
+function chooseDifficulty(difficulty, { hideMenu = false } = {}) {
   if (!DIFFICULTIES[difficulty]) return;
-  if (!canOpenLevel(difficulty, 1)) {
+  const targetLevel = getLastPlayableLevelForDifficulty(difficulty);
+  if (!canOpenLevel(difficulty, targetLevel)) {
     const firstIndex = globalLevelIndex(difficulty, 1);
     const message =
       firstIndex > FREE_LEVELS && !isPremiumUnlocked()
@@ -1127,11 +1228,7 @@ function chooseDifficulty(difficulty) {
     renderLevelUI();
     return;
   }
-  currentDifficulty = difficulty;
-  currentLevel = 1;
-  selectedMenuDifficulty = difficulty;
-  playMenuSound();
-  buildBoard();
+  startLevel(difficulty, targetLevel, { hideMenu });
 }
 
 resetButton.addEventListener("click", () => {
@@ -1165,8 +1262,11 @@ levelGrid.addEventListener("click", (event) => {
     openPaywall(message);
     return;
   }
-  currentLevel = targetLevel;
-  buildBoard();
+  startLevel(currentDifficulty, targetLevel);
+});
+
+levelCardHead.addEventListener("click", () => {
+  labPanel.classList.toggle("is-expanded");
 });
 
 menuOverlay.addEventListener("click", (event) => {
@@ -1178,13 +1278,12 @@ menuOverlay.addEventListener("click", (event) => {
 });
 
 playButton.addEventListener("click", () => {
-  chooseDifficulty(selectedMenuDifficulty);
-  menuOverlay.classList.add("is-hidden");
+  chooseDifficulty(selectedMenuDifficulty, { hideMenu: true });
 });
 
 continueButton.addEventListener("click", () => {
-  playMenuSound();
-  menuOverlay.classList.add("is-hidden");
+  const next = getContinueLevel({ allowLockedPremium: true });
+  startLevel(next.difficulty, next.level, { hideMenu: true });
 });
 
 menuButton.addEventListener("click", () => {
@@ -1268,7 +1367,13 @@ restorePurchaseButton.addEventListener("click", async () => {
 
 const [previewMode, previewQuery = ""] = window.location.hash.slice(1).split("?");
 const previewParams = new URLSearchParams(previewQuery);
+const savedStart = getContinueLevel();
+currentDifficulty = savedStart.difficulty;
+currentLevel = savedStart.level;
+selectedMenuDifficulty = savedStart.difficulty;
+
 if (previewMode === "game-preview") {
+  document.body.classList.add("is-appstore-shot");
   const previewDifficulty = previewParams.get("difficulty");
   const previewLevel = Number(previewParams.get("level")) || 1;
   if (DIFFICULTIES[previewDifficulty]) {
@@ -1281,6 +1386,7 @@ if (previewMode === "game-preview") {
 renderLevelUI();
 buildBoard();
 if (previewMode === "paywall-preview") {
+  document.body.classList.add("is-appstore-shot");
   openPaywall("You finished the free pack. Unlock premium access for $2.99, then keep opening levels one by one.");
 }
 if (previewMode === "game-preview") {
