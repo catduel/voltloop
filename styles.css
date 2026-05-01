@@ -374,17 +374,31 @@ button {
   border: 2px solid #0a0f18;
   border-radius: 9px;
   background:
-    linear-gradient(135deg, #30fff4 0 52%, #ffe36e 52%),
-    var(--paper);
-  box-shadow: 0 0 18px rgba(102, 244, 255, 0.28);
+    radial-gradient(circle at 42% 34%, rgba(102, 244, 255, 0.32), transparent 33%),
+    linear-gradient(135deg, #172337, #07111c 68%);
+  box-shadow: 0 0 18px rgba(102, 244, 255, 0.28), inset 0 0 0 2px rgba(255, 91, 218, 0.16);
 }
 
 .brand-mark::before {
   content: "";
+  position: absolute;
+  width: 56%;
+  height: 56%;
+  border: 2px solid #66f4ff;
+  border-right-color: #ff5bda;
+  border-bottom-color: #39e6ca;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(102, 244, 255, 0.55);
+}
+
+.brand-mark::after {
+  content: "";
+  position: absolute;
   width: 9px;
   height: 15px;
-  background: #07111c;
+  background: #ffd84e;
   clip-path: polygon(55% 0, 18% 47%, 48% 47%, 34% 100%, 82% 38%, 52% 38%);
+  filter: drop-shadow(0 0 5px rgba(255, 216, 78, 0.8));
 }
 
 .topbar-actions {

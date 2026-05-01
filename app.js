@@ -1131,3 +1131,6 @@ unlockButton.addEventListener("click", async () => {
 
 renderLevelUI();
 buildBoard();
+if (window.location.hash === "#paywall-preview") {
+  openPaywall("You finished the free pack. Unlock premium access for $2.99, then keep opening levels one by one.");
+}
