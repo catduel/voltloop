@@ -1,0 +1,8 @@
+{
+  "appId": "com.catduel.voltloop",
+  "appName": "VoltLoop",
+  "webDir": "www",
+  "ios": {
+    "scheme": "VoltLoop"
+  }
+}

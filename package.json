@@ -1,0 +1,17 @@
+{
+  "name": "voltloop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "VoltLoop neon circuit puzzle for iOS.",
+  "scripts": {
+    "build": "node scripts/prepare-www.mjs",
+    "cap:sync:ios": "npm run build && npx cap sync ios"
+  },
+  "dependencies": {
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/ios": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.0.0"
+  }
+}
