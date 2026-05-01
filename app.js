@@ -1,6 +1,7 @@
 const canvas = document.querySelector("#circuitCanvas");
 const ctx = canvas.getContext("2d");
 const moveCountEl = document.querySelector("#moveCount");
+const currentLevelStatus = document.querySelector("#currentLevelStatus");
 const timeCountEl = document.querySelector("#timeCount");
 const timeCard = document.querySelector("#timeCard");
 const lampStateEl = document.querySelector("#lampState");
@@ -40,11 +41,11 @@ const PURCHASE_KEY = "voltLoopPremiumUnlocked.v1";
 const UNLOCK_KEY = "voltLoopHighestUnlocked.v1";
 const FREE_LEVELS = 10;
 const DIFFICULTIES = {
-  easy: { label: "Easy", count: 10, size: 6, decoy: 0.26, minPath: 8 },
-  medium: { label: "Medium", count: 20, size: 7, decoy: 0.38, minPath: 11 },
-  hard: { label: "Hard", count: 30, size: 8, decoy: 0.5, minPath: 15 },
-  impossible: { label: "Impossible", count: 20, size: 9, decoy: 0.62, minPath: 19 },
-  edison: { label: "Edison", count: 20, size: 9, decoy: 0.68, minPath: 21 },
+  easy: { label: "Easy", shortLabel: "Easy", count: 10, size: 6, decoy: 0.26, minPath: 8 },
+  medium: { label: "Medium", shortLabel: "Med.", count: 20, size: 7, decoy: 0.38, minPath: 11 },
+  hard: { label: "Hard", shortLabel: "Hard", count: 30, size: 8, decoy: 0.5, minPath: 15 },
+  impossible: { label: "Impossible", shortLabel: "Imp.", count: 20, size: 9, decoy: 0.62, minPath: 19 },
+  edison: { label: "Edison", shortLabel: "Edison", count: 20, size: 9, decoy: 0.68, minPath: 21 },
 };
 
 const THEMES = [
@@ -646,6 +647,7 @@ function renderLevelUI() {
   const config = DIFFICULTIES[currentDifficulty];
   levelEyebrow.textContent = `${config.label} ${currentLevel} - ${currentTheme.label}`;
   levelTitle.textContent = `${config.label} ${currentLevel}`;
+  currentLevelStatus.textContent = `${config.shortLabel} ${currentLevel}`;
   difficultyTabs.querySelectorAll("[data-difficulty]").forEach((button) => {
     button.classList.toggle("is-active", button.dataset.difficulty === currentDifficulty);
   });

@@ -1514,7 +1514,7 @@ body.is-timed-level .board-wrap::after {
   .status-panel {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -1794,7 +1794,7 @@ body.is-timed-level .board-wrap::after {
   .status-panel {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 7px;
     border-radius: 16px;
     padding: 7px;
@@ -1810,6 +1810,11 @@ body.is-timed-level .board-wrap::after {
   .meter-card strong {
     margin-top: 3px;
     font-size: 20px;
+  }
+
+  .level-meter strong {
+    font-size: 16px;
+    white-space: nowrap;
   }
 
   .workbench {
