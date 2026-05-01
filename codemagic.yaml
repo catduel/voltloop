@@ -30,6 +30,10 @@ workflows:
       - name: Apply VoltLoop iOS app icon
         script: |
           bash scripts/apply-ios-icon.sh
+      - name: Set build number
+        script: |
+          cd ios/App
+          agvtool new-version -all "$BUILD_NUMBER"
       - name: Set up code signing
         script: |
           xcode-project use-profiles
