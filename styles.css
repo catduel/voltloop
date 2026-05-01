@@ -17,6 +17,207 @@
   body {
     width: 100%;
     height: 100%;
+    overflow: hidden;
+  }
+
+  .app-shell {
+    width: 100vw;
+    max-width: none;
+    height: 100dvh;
+    margin: 0;
+    padding: 8px;
+    overflow: hidden;
+  }
+
+  .topbar {
+    position: relative;
+    top: 0;
+    min-height: 44px;
+    margin: 0 0 6px;
+    padding: 5px 104px 5px 5px;
+  }
+
+  .topbar-actions {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: grid;
+    grid-template-columns: repeat(3, 30px);
+    gap: 5px;
+    width: 100px;
+  }
+
+  .tool-button {
+    min-height: 34px;
+  }
+
+  #menuButton,
+  #hintButton,
+  #resetButton {
+    width: 30px;
+  }
+
+  .brand span:last-child {
+    max-width: 138px;
+  }
+
+  .game-shell {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    height: calc(100dvh - 58px);
+    min-height: 0;
+    padding-top: 0;
+    overflow: hidden;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .hero-copy {
+    min-height: 0;
+    border-radius: 14px;
+    padding: 8px 10px;
+    box-shadow: none;
+  }
+
+  .hero-copy::after,
+  .hero-copy p:not(.eyebrow) {
+    display: none;
+  }
+
+  .hero-copy h1 {
+    margin-top: 2px;
+    font-size: 20px;
+  }
+
+  .status-panel {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100%;
+    gap: 5px;
+    border-radius: 14px;
+    padding: 5px;
+    box-shadow: none;
+  }
+
+  .meter-card {
+    min-width: 0;
+    border-radius: 10px;
+    padding: 7px;
+  }
+
+  .meter-card strong {
+    margin-top: 2px;
+    font-size: 18px;
+  }
+
+  .level-meter strong {
+    font-size: 15px;
+    white-space: nowrap;
+  }
+
+  .workbench {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) 78px;
+    gap: 6px;
+    min-height: 0;
+  }
+
+  .board-wrap,
+  #circuitCanvas {
+    width: min(calc(100vw - 16px), calc(100dvh - 315px));
+    max-width: calc(100vw - 16px);
+  }
+
+  .board-wrap {
+    justify-self: center;
+    align-self: center;
+    border-radius: 16px;
+  }
+
+  #circuitCanvas {
+    display: block;
+    height: min(calc(100vw - 16px), calc(100dvh - 315px));
+  }
+
+  .lab-panel {
+    height: 78px;
+    min-height: 78px;
+    overflow: hidden;
+    border-radius: 14px;
+    padding: 7px;
+    box-shadow: none;
+  }
+
+  .level-card {
+    height: 62px;
+    padding: 9px;
+    overflow: hidden;
+  }
+
+  .level-card h2 {
+    font-size: 18px;
+  }
+
+  .difficulty-tabs,
+  .level-grid,
+  .record-row,
+  .rules,
+  .daily-card,
+  .lab-visual {
+    display: none;
+  }
+
+  .paywall-card,
+  .legal-card {
+    box-sizing: border-box;
+    width: calc(100vw - 40px);
+    max-width: calc(100vw - 40px);
+    padding: 22px;
+    border-radius: 22px;
+    overflow: hidden;
+  }
+
+  .paywall-card h1 {
+    font-size: 36px;
+    line-height: 1.04;
+  }
+
+  .paywall-card p {
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .price-row {
+    align-items: center;
+    padding: 12px;
+  }
+
+  .price-row strong {
+    font-size: 34px;
+  }
+
+  .price-row span {
+    font-size: 12px;
+  }
+
+  .paywall-card .primary-button,
+  .paywall-card .secondary-button {
+    width: 100%;
+    min-height: 46px;
+  }
+}
+
+@media (max-width: 640px) {
+  html,
+  body {
+    width: 100%;
+    height: 100%;
     min-height: 100%;
     overflow: hidden;
     overscroll-behavior: none;
@@ -294,6 +495,168 @@
   .chip-row span {
     padding: 5px 7px;
     font-size: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .app-shell {
+    width: 100vw;
+    max-width: none;
+    height: 100dvh;
+    margin: 0;
+    padding: 8px;
+    overflow: hidden;
+  }
+
+  .topbar {
+    position: relative;
+    top: 0;
+    min-height: 44px;
+    margin: 0 0 6px;
+    padding: 5px 104px 5px 5px;
+  }
+
+  .topbar-actions {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: grid;
+    grid-template-columns: repeat(3, 30px);
+    gap: 5px;
+    width: 100px;
+  }
+
+  .tool-button {
+    min-height: 34px;
+  }
+
+  #menuButton,
+  #hintButton,
+  #resetButton {
+    width: 30px;
+  }
+
+  .brand span:last-child {
+    max-width: 138px;
+  }
+
+  .game-shell {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    height: calc(100dvh - 58px);
+    min-height: 0;
+    padding-top: 0;
+    overflow: hidden;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .hero-copy {
+    min-height: 0;
+    border-radius: 14px;
+    padding: 8px 10px;
+    box-shadow: none;
+  }
+
+  .hero-copy::after,
+  .hero-copy p:not(.eyebrow) {
+    display: none;
+  }
+
+  .hero-copy h1 {
+    margin-top: 2px;
+    font-size: 20px;
+  }
+
+  .status-panel {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100%;
+    gap: 5px;
+    border-radius: 14px;
+    padding: 5px;
+    box-shadow: none;
+  }
+
+  .meter-card {
+    min-width: 0;
+    border-radius: 10px;
+    padding: 7px;
+  }
+
+  .meter-card strong {
+    margin-top: 2px;
+    font-size: 18px;
+  }
+
+  .level-meter strong {
+    font-size: 15px;
+    white-space: nowrap;
+  }
+
+  .workbench {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) 78px;
+    gap: 6px;
+    min-height: 0;
+  }
+
+  .board-wrap,
+  #circuitCanvas {
+    width: min(calc(100vw - 16px), calc(100dvh - 315px));
+    max-width: calc(100vw - 16px);
+  }
+
+  .board-wrap {
+    justify-self: center;
+    align-self: center;
+    border-radius: 16px;
+  }
+
+  #circuitCanvas {
+    display: block;
+    height: min(calc(100vw - 16px), calc(100dvh - 315px));
+  }
+
+  .lab-panel {
+    height: 78px;
+    min-height: 78px;
+    overflow: hidden;
+    border-radius: 14px;
+    padding: 7px;
+    box-shadow: none;
+  }
+
+  .level-card {
+    height: 62px;
+    padding: 9px;
+    overflow: hidden;
+  }
+
+  .level-card h2 {
+    font-size: 18px;
+  }
+
+  .difficulty-tabs,
+  .level-grid,
+  .record-row,
+  .rules,
+  .daily-card,
+  .lab-visual {
+    display: none;
   }
 }
 
@@ -1936,5 +2299,194 @@ body.is-timed-level .board-wrap::after {
   .chip-row span {
     padding: 5px 7px;
     font-size: 10px;
+  }
+}
+
+/* Final iPhone App Store and TestFlight mobile overrides. */
+@media (max-width: 900px) {
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .app-shell {
+    width: 100vw;
+    max-width: none;
+    height: 100dvh;
+    margin: 0;
+    padding: 8px;
+    overflow: hidden;
+  }
+
+  .topbar {
+    position: relative;
+    top: 0;
+    min-height: 44px;
+    margin: 0 0 6px;
+    padding: 5px 104px 5px 5px;
+  }
+
+  .topbar-actions {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: grid;
+    grid-template-columns: repeat(3, 30px);
+    gap: 5px;
+    width: 100px;
+  }
+
+  .tool-button {
+    min-height: 34px;
+  }
+
+  #menuButton,
+  #hintButton,
+  #resetButton {
+    width: 30px;
+  }
+
+  .brand span:last-child {
+    max-width: 138px;
+  }
+
+  .game-shell {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    height: calc(100dvh - 58px);
+    min-height: 0;
+    padding-top: 0;
+    overflow: hidden;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .hero-copy {
+    min-height: 0;
+    border-radius: 14px;
+    padding: 8px 10px;
+    box-shadow: none;
+  }
+
+  .hero-copy::after,
+  .hero-copy p:not(.eyebrow) {
+    display: none;
+  }
+
+  .hero-copy h1 {
+    margin-top: 2px;
+    font-size: 20px;
+  }
+
+  .status-panel {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100%;
+    gap: 5px;
+    border-radius: 14px;
+    padding: 5px;
+    box-shadow: none;
+  }
+
+  .meter-card {
+    min-width: 0;
+    border-radius: 10px;
+    padding: 7px;
+  }
+
+  .meter-card strong {
+    margin-top: 2px;
+    font-size: 18px;
+  }
+
+  .level-meter strong {
+    font-size: 15px;
+    white-space: nowrap;
+  }
+
+  .workbench {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) 78px;
+    gap: 6px;
+    min-height: 0;
+  }
+
+  .board-wrap,
+  #circuitCanvas {
+    width: min(calc(100vw - 16px), calc(100dvh - 315px));
+    max-width: calc(100vw - 16px);
+  }
+
+  .board-wrap {
+    justify-self: center;
+    align-self: center;
+    border-radius: 16px;
+  }
+
+  #circuitCanvas {
+    display: block;
+    height: min(calc(100vw - 16px), calc(100dvh - 315px));
+  }
+
+  .lab-panel {
+    height: 78px;
+    min-height: 78px;
+    overflow: hidden;
+    border-radius: 14px;
+    padding: 7px;
+    box-shadow: none;
+  }
+
+  .level-card {
+    height: 62px;
+    padding: 9px;
+    overflow: hidden;
+  }
+
+  .level-card h2 {
+    font-size: 18px;
+  }
+
+  .difficulty-tabs,
+  .level-grid,
+  .record-row,
+  .rules,
+  .daily-card,
+  .lab-visual {
+    display: none;
+  }
+
+  .paywall-card,
+  .legal-card {
+    box-sizing: border-box;
+    width: calc(100vw - 40px);
+    max-width: calc(100vw - 40px);
+    padding: 22px;
+    border-radius: 22px;
+    overflow: hidden;
+  }
+
+  .paywall-card h1 {
+    font-size: 36px;
+    line-height: 1.04;
+  }
+
+  .paywall-card p {
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .paywall-card .primary-button,
+  .paywall-card .secondary-button {
+    width: 100%;
+    min-height: 46px;
   }
 }

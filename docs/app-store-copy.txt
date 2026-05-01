@@ -1,0 +1,73 @@
+DESCRIPTION
+
+VOLTLOOP - Neon Circuit Puzzle
+
+Rotate wires, guide electric current, and light every bulb.
+
+VoltLoop is a clean circuit puzzle game inspired by the satisfying logic of building real electric paths. Tap tiles to rotate wires, carry current from the battery, avoid short circuits, split power across multiple routes, and solve 100 handcrafted-style levels across five escalating episodes.
+
+KEY FEATURES
+
+- 100 puzzle levels across Easy, Medium, Hard, Impossible, and Edison episodes
+- Electric circuit logic with batteries, wires, splitters, bulbs, overloads, and special cable behavior
+- Premium puzzle flow: first 10 levels free, then unlock the full game with one purchase
+- Timed challenge levels where power pressure rises as the clock runs down
+- Multiple visual themes, from neon labs to city grids and Edison-inspired circuits
+- Best time, moves, and score records saved locally on your device
+- Restore Purchase support for the same Apple ID
+- 100% offline gameplay
+- No ads, no subscriptions, no recurring fees, no energy meters
+
+HOW TO PLAY
+
+- Tap a tile to rotate its wire
+- Connect the battery to every bulb
+- Use splitters to send current in more than one direction
+- Watch out for wrong connections and overload pieces
+- Finish levels with fewer moves and faster times to beat your record
+
+Designed for thinkers who like clean logic, bright feedback, and that perfect moment when the circuit finally connects.
+
+Suitable for all ages.
+
+IN-APP PURCHASE
+
+The first 10 levels are free. To unlock the remaining levels and future episode content, a single one-time In-App Purchase ("Full Unlock") is available for $2.99 USD. This is a non-consumable purchase and can be restored on devices using the same Apple ID via the Restore Purchase button.
+
+No subscriptions, no recurring fees, no advertisements.
+
+PRIVACY
+
+VoltLoop does not collect, store, or transmit personal information. The game works offline. Game progress, records, settings, and premium unlock status are saved locally on your device.
+
+
+PROMOTIONAL TEXT
+
+Light the circuit. Beat the clock. Unlock 100 neon electric puzzles with one clean premium upgrade.
+
+
+KEYWORDS
+
+circuit,puzzle,electricity,logic,wires,bulb,battery,brain,rotate,neon,offline,levels,STEM
+
+
+SUBTITLE OPTIONS
+
+Neon Circuit Puzzle
+Electric Logic Puzzles
+Rotate Wires, Light Bulbs
+
+
+SUPPORT URL
+
+https://catduel.github.io/voltloop/
+
+
+PRIVACY POLICY URL
+
+https://catduel.github.io/voltloop/privacy.html
+
+
+TERMS OF USE URL
+
+https://catduel.github.io/voltloop/terms.html

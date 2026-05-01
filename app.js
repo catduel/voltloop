@@ -1266,11 +1266,23 @@ restorePurchaseButton.addEventListener("click", async () => {
   paywallMessage.textContent = "Premium restored on this device.";
 });
 
+const [previewMode, previewQuery = ""] = window.location.hash.slice(1).split("?");
+const previewParams = new URLSearchParams(previewQuery);
+if (previewMode === "game-preview") {
+  const previewDifficulty = previewParams.get("difficulty");
+  const previewLevel = Number(previewParams.get("level")) || 1;
+  if (DIFFICULTIES[previewDifficulty]) {
+    currentDifficulty = previewDifficulty;
+    currentLevel = Math.min(Math.max(previewLevel, 1), DIFFICULTIES[previewDifficulty].count);
+    selectedMenuDifficulty = previewDifficulty;
+  }
+}
+
 renderLevelUI();
 buildBoard();
-if (window.location.hash === "#paywall-preview") {
+if (previewMode === "paywall-preview") {
   openPaywall("You finished the free pack. Unlock premium access for $2.99, then keep opening levels one by one.");
 }
-if (window.location.hash === "#game-preview") {
+if (previewMode === "game-preview") {
   menuOverlay.classList.add("is-hidden");
 }
