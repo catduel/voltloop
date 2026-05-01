@@ -1247,7 +1247,7 @@ button {
 }
 
 .menu-card p {
-  max-width: 560px;
+  max-width: 402px;
   color: #d7e6f5;
   font-size: 18px;
   line-height: 1.5;
@@ -2573,12 +2573,12 @@ body.is-appstore-shot .board-wrap {
 
 body.is-appstore-shot .board-wrap,
 body.is-appstore-shot #circuitCanvas {
-  width: min(calc(100vw - 24px), calc(100dvh - 320px));
-  max-width: calc(100vw - 24px);
+  width: min(380px, calc(100vw - 42px), calc(100dvh - 320px));
+  max-width: min(380px, calc(100vw - 42px));
 }
 
 body.is-appstore-shot #circuitCanvas {
-  height: min(calc(100vw - 24px), calc(100dvh - 320px));
+  height: min(380px, calc(100vw - 42px), calc(100dvh - 320px));
 }
 
 body.is-appstore-shot .lab-panel {
@@ -2618,53 +2618,272 @@ body {
   cursor: pointer;
 }
 
+.level-meter {
+  cursor: pointer;
+}
+
+.levels-entry-button {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  min-height: 78px;
+  border: 1px solid rgba(137, 221, 255, 0.28);
+  border-radius: 18px;
+  padding: 14px 16px;
+  color: #eff8ff;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: inset 0 0 18px rgba(102, 244, 255, 0.07);
+  cursor: pointer;
+}
+
+.levels-entry-button span {
+  font-size: 26px;
+  font-weight: 900;
+}
+
+.levels-entry-button strong {
+  color: var(--cyan);
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.level-select-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  padding: max(14px, env(safe-area-inset-top)) 14px max(14px, env(safe-area-inset-bottom));
+  background:
+    radial-gradient(circle at 50% 10%, rgba(102, 244, 255, 0.14), transparent 32%),
+    linear-gradient(180deg, rgba(6, 12, 24, 0.98), rgba(12, 6, 30, 0.98));
+}
+
+.level-select-overlay.is-hidden {
+  display: none;
+}
+
+.level-select-card {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 14px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 402px;
+  height: min(820px, 100%);
+  overflow: hidden;
+}
+
+.level-select-top {
+  display: grid;
+  grid-template-columns: 58px 1fr 58px;
+  align-items: center;
+  gap: 8px;
+}
+
+.level-select-top h2 {
+  margin: 0;
+  color: #ffd447;
+  font-size: 28px;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0 2px 0 #63221e, 0 0 14px rgba(255, 212, 71, 0.3);
+}
+
+.back-button {
+  min-height: 38px;
+  border: 1px solid rgba(255, 212, 71, 0.78);
+  border-radius: 10px;
+  color: #ffd447;
+  background: rgba(255, 212, 71, 0.08);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.episode-grid {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  overflow: auto;
+  padding: 2px 2px 18px;
+  scrollbar-width: none;
+}
+
+.episode-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.episode-card {
+  display: grid;
+  gap: 12px;
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+  border: 2px solid rgba(137, 221, 255, 0.72);
+  border-radius: 16px;
+  padding: 12px;
+  background:
+    linear-gradient(135deg, rgba(20, 35, 58, 0.92), rgba(35, 16, 58, 0.84)),
+    rgba(12, 20, 33, 0.86);
+  box-shadow: inset 0 0 18px rgba(102, 244, 255, 0.08);
+}
+
+.episode-card:nth-child(1) {
+  border-color: rgba(255, 212, 71, 0.78);
+}
+
+.episode-card:nth-child(3),
+.episode-card:nth-child(5) {
+  border-color: rgba(211, 102, 255, 0.78);
+}
+
+.episode-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: start;
+  gap: 8px;
+}
+
+.episode-head h3 {
+  margin: 0;
+  color: #f4f7ff;
+  font-size: 15px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.episode-head p,
+.episode-range {
+  margin: 3px 0 0;
+  color: rgba(229, 240, 255, 0.58);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.episode-badge {
+  min-width: 42px;
+  border-radius: 999px;
+  padding: 3px 8px;
+  color: #271000;
+  background: #ffd447;
+  font-size: 10px;
+  font-weight: 1000;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.episode-level-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  min-width: 0;
+}
+
+.episode-level {
+  position: relative;
+  min-width: 0;
+  aspect-ratio: 1;
+  border: 1px solid rgba(137, 221, 255, 0.3);
+  border-radius: 8px;
+  color: #f6fbff;
+  background: rgba(15, 18, 38, 0.86);
+  font-size: 15px;
+  font-weight: 1000;
+  cursor: pointer;
+}
+
+.episode-level.is-done {
+  border-color: rgba(102, 244, 255, 0.78);
+  box-shadow: inset 0 0 18px rgba(102, 244, 255, 0.16);
+}
+
+.episode-level.is-active {
+  color: #07111b;
+  background: linear-gradient(180deg, #89ffff, #35d8e5);
+}
+
+.episode-level.is-locked {
+  color: transparent;
+  border-color: rgba(255, 104, 121, 0.35);
+  background: rgba(26, 12, 38, 0.74);
+  cursor: pointer;
+}
+
+.episode-level.is-locked::before {
+  content: "\1F512";
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 15px;
+}
+
+.episode-level span {
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  color: #2a1000;
+  background: #ffd447;
+  font-size: 10px;
+  font-weight: 1000;
+}
+
 @media (max-width: 760px) {
+  .workbench {
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .board-wrap {
+    align-self: center;
+  }
+
+  .board-wrap,
+  #circuitCanvas {
+    width: min(380px, calc(100vw - 42px), calc(100dvh - 285px));
+    max-width: min(380px, calc(100vw - 42px));
+  }
+
+  #circuitCanvas {
+    height: min(380px, calc(100vw - 42px), calc(100dvh - 285px));
+  }
+
   .lab-panel {
-    height: 78px;
-    min-height: 78px;
-    overflow: hidden;
-    transition: height 160ms ease;
+    display: none;
   }
 
-  .level-card {
-    height: 62px;
-    overflow: hidden;
+  .level-select-overlay {
+    align-items: stretch;
+    justify-items: stretch;
   }
 
-  .lab-panel.is-expanded {
-    height: min(230px, 32dvh);
-    min-height: min(230px, 32dvh);
-    overflow: auto;
+  .level-select-card {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 402px;
+    height: 100%;
   }
 
-  .lab-panel.is-expanded .level-card {
-    height: auto;
-    min-height: 100%;
-    overflow: visible;
+  .episode-head {
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
-  .lab-panel.is-expanded .difficulty-tabs {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 5px;
+  .episode-badge {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: end;
+    margin-top: 24px;
   }
 
-  .lab-panel.is-expanded .difficulty-tabs button {
-    min-height: 32px;
-    padding: 0 4px;
-    border-radius: 11px;
-    font-size: 10px;
+  .episode-card {
+    padding: 10px;
   }
 
-  .lab-panel.is-expanded .level-grid {
-    display: grid;
-    grid-template-columns: repeat(10, minmax(0, 1fr));
-    gap: 4px;
-    max-height: 84px;
-    overflow: auto;
-  }
-
-  .lab-panel.is-expanded .record-row {
-    display: flex;
+  .episode-level-grid {
+    gap: 6px;
   }
 }

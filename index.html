@@ -7,7 +7,7 @@
     <link rel="icon" href="./assets/voltloop-icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="./assets/voltloop-icon-1024.png" />
     <link rel="manifest" href="./manifest.json" />
-    <link rel="stylesheet" href="./styles.css?v=60" />
+    <link rel="stylesheet" href="./styles.css?v=62" />
   </head>
   <body>
     <section id="menuOverlay" class="menu-overlay">
@@ -18,13 +18,10 @@
         <span class="eyebrow">Neon circuit puzzle</span>
         <h1>VoltLoop</h1>
         <p>Rotate the wires, carry the current from battery to bulb, and beat your best time on every level.</p>
-        <div class="menu-difficulties" aria-label="Starting difficulty">
-          <button class="menu-difficulty is-active" type="button" data-difficulty="easy">Easy <span>10</span></button>
-          <button class="menu-difficulty" type="button" data-difficulty="medium">Medium <span>20</span></button>
-          <button class="menu-difficulty" type="button" data-difficulty="hard">Hard <span>30</span></button>
-          <button class="menu-difficulty" type="button" data-difficulty="impossible">Impossible <span>20</span></button>
-          <button class="menu-difficulty" type="button" data-difficulty="edison">Edison <span>20</span></button>
-        </div>
+        <button id="menuLevelsButton" class="levels-entry-button" type="button">
+          <span>Levels</span>
+          <strong>Choose episode and stage</strong>
+        </button>
         <p class="menu-note">100 handcrafted-style levels ready. More episodes coming.</p>
         <div class="menu-actions">
           <button id="playButton" class="primary-button" type="button">Play</button>
@@ -36,6 +33,16 @@
           <button class="link-button" type="button" data-legal="terms">Terms of Use</button>
         </div>
       </div>
+    </section>
+
+    <section id="levelSelectOverlay" class="level-select-overlay is-hidden" aria-modal="true" role="dialog">
+      <article class="level-select-card">
+        <div class="level-select-top">
+          <button id="levelSelectCloseButton" class="back-button" type="button" aria-label="Close levels">Back</button>
+          <h2>Levels</h2>
+        </div>
+        <div id="episodeGrid" class="episode-grid"></div>
+      </article>
     </section>
 
     <section id="legalOverlay" class="legal-overlay is-hidden" aria-modal="true" role="dialog">
@@ -188,6 +195,6 @@
       </main>
     </div>
 
-    <script src="./app.js?v=60"></script>
+    <script src="./app.js?v=62"></script>
   </body>
 </html>

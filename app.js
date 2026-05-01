@@ -21,14 +21,19 @@ const menuOverlay = document.querySelector("#menuOverlay");
 const playButton = document.querySelector("#playButton");
 const continueButton = document.querySelector("#continueButton");
 const soundToggle = document.querySelector("#soundToggle");
+const menuLevelsButton = document.querySelector("#menuLevelsButton");
 const difficultyTabs = document.querySelector("#difficultyTabs");
 const levelEyebrow = document.querySelector("#levelEyebrow");
 const levelTitle = document.querySelector("#levelTitle");
 const levelGrid = document.querySelector("#levelGrid");
 const labPanel = document.querySelector(".lab-panel");
 const levelCardHead = document.querySelector(".level-card-head");
+const levelStatusCard = document.querySelector(".level-meter");
 const recordText = document.querySelector("#recordText");
 const progressText = document.querySelector("#progressText");
+const levelSelectOverlay = document.querySelector("#levelSelectOverlay");
+const levelSelectCloseButton = document.querySelector("#levelSelectCloseButton");
+const episodeGrid = document.querySelector("#episodeGrid");
 const legalOverlay = document.querySelector("#legalOverlay");
 const legalCloseButton = document.querySelector("#legalCloseButton");
 const privacyPanel = document.querySelector("#privacyPanel");
@@ -51,6 +56,14 @@ const DIFFICULTIES = {
   hard: { label: "Hard", shortLabel: "Hard", count: 30, size: 8, decoy: 0.5, minPath: 15 },
   impossible: { label: "Impossible", shortLabel: "Imp.", count: 20, size: 9, decoy: 0.62, minPath: 19 },
   edison: { label: "Edison", shortLabel: "Edison", count: 20, size: 9, decoy: 0.68, minPath: 21 },
+};
+
+const EPISODE_NAMES = {
+  easy: "Earth Launchpad",
+  medium: "Moon Base",
+  hard: "Orbital Lab",
+  impossible: "Storm Grid",
+  edison: "Edison Workshop",
 };
 
 const THEMES = [
@@ -870,6 +883,7 @@ function renderLevelUI() {
   const record = recordFor();
   recordText.textContent = record ? `${formatTime(record.elapsedMs)} · ${record.moves} moves · ${record.score}` : "No record yet";
   renderProgress();
+  renderEpisodeGrid();
 
   levelGrid.innerHTML = Array.from({ length: config.count }, (_, index) => {
     const level = index + 1;
@@ -882,6 +896,49 @@ function renderLevelUI() {
     const label = locked ? premium ? "$" : "lock" : level;
     return `<button class="level-pill${active}${done}${lockClass}" type="button" data-level="${level}" aria-label="${config.label} ${level}${locked ? " locked" : ""}">${label}</button>`;
   }).join("");
+}
+
+function renderEpisodeGrid() {
+  const difficultyEntries = Object.entries(DIFFICULTIES);
+  let start = 1;
+  episodeGrid.innerHTML = difficultyEntries
+    .map(([difficulty, config]) => {
+      const end = start + config.count - 1;
+      const rows = Array.from({ length: config.count }, (_, index) => {
+        const level = index + 1;
+        const globalIndex = globalLevelIndex(difficulty, level);
+        const locked = !canOpenLevel(difficulty, level);
+        const premiumLocked = globalIndex > FREE_LEVELS && !isPremiumUnlocked();
+        const done = Boolean(recordFor(difficulty, level));
+        const active = difficulty === currentDifficulty && level === currentLevel;
+        const label = locked ? "lock" : level;
+        return `<button class="episode-level${locked ? " is-locked" : ""}${done ? " is-done" : ""}${active ? " is-active" : ""}" type="button" data-difficulty="${difficulty}" data-level="${level}" aria-label="${config.label} ${level}${locked ? " locked" : ""}">${label}${premiumLocked ? "<span>$</span>" : ""}</button>`;
+      }).join("");
+      const premiumBadge = start > FREE_LEVELS ? '<span class="episode-badge">Pro</span>' : "";
+      const card = `<section class="episode-card" data-difficulty="${difficulty}">
+        <div class="episode-head">
+          <div>
+            <h3>${EPISODE_NAMES[difficulty]}</h3>
+            <p>${config.label} · ${config.count} levels</p>
+          </div>
+          <div class="episode-range">L${start}-${end}</div>
+          ${premiumBadge}
+        </div>
+        <div class="episode-level-grid">${rows}</div>
+      </section>`;
+      start = end + 1;
+      return card;
+    })
+    .join("");
+}
+
+function openLevelSelect() {
+  renderEpisodeGrid();
+  levelSelectOverlay.classList.remove("is-hidden");
+}
+
+function closeLevelSelect() {
+  levelSelectOverlay.classList.add("is-hidden");
 }
 
 function renderProgress() {
@@ -1266,7 +1323,33 @@ levelGrid.addEventListener("click", (event) => {
 });
 
 levelCardHead.addEventListener("click", () => {
+  if (window.matchMedia("(max-width: 760px)").matches) {
+    openLevelSelect();
+    return;
+  }
   labPanel.classList.toggle("is-expanded");
+});
+
+levelStatusCard.addEventListener("click", openLevelSelect);
+
+menuLevelsButton.addEventListener("click", () => {
+  playMenuSound();
+  openLevelSelect();
+});
+
+levelSelectCloseButton.addEventListener("click", closeLevelSelect);
+
+levelSelectOverlay.addEventListener("click", (event) => {
+  if (event.target === levelSelectOverlay) closeLevelSelect();
+});
+
+episodeGrid.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-level]");
+  if (!button) return;
+  playMenuSound();
+  const difficulty = button.dataset.difficulty;
+  const targetLevel = Number(button.dataset.level);
+  if (startLevel(difficulty, targetLevel, { hideMenu: true, sound: false })) closeLevelSelect();
 });
 
 menuOverlay.addEventListener("click", (event) => {
@@ -1391,4 +1474,8 @@ if (previewMode === "paywall-preview") {
 }
 if (previewMode === "game-preview") {
   menuOverlay.classList.add("is-hidden");
+}
+if (previewMode === "levels-preview") {
+  menuOverlay.classList.add("is-hidden");
+  openLevelSelect();
 }
