@@ -27,6 +27,9 @@ workflows:
       - name: Sync Capacitor iOS
         script: |
           npx cap sync ios
+      - name: Apply VoltLoop iOS app icon
+        script: |
+          bash scripts/apply-ios-icon.sh
       - name: Set up code signing
         script: |
           xcode-project use-profiles

@@ -14,5 +14,9 @@ for (const file of files) {
 
 await cp(join(root, "assets"), join(out, "assets"), {
   recursive: true,
-  filter: (source) => !source.includes(".git"),
+  filter: (source) => {
+    if (source.includes(".git")) return false;
+    if (source.endsWith(".png") && !source.endsWith("voltloop-icon-1024.png")) return false;
+    return true;
+  },
 });
