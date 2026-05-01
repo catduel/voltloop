@@ -26,6 +26,15 @@ make_icon 80 "AppIcon-40@2x.png"
 make_icon 120 "AppIcon-40@3x.png"
 make_icon 120 "AppIcon-60@2x.png"
 make_icon 180 "AppIcon-60@3x.png"
+make_icon 20 "AppIcon-iPad-20@1x.png"
+make_icon 40 "AppIcon-iPad-20@2x.png"
+make_icon 29 "AppIcon-iPad-29@1x.png"
+make_icon 58 "AppIcon-iPad-29@2x.png"
+make_icon 40 "AppIcon-iPad-40@1x.png"
+make_icon 80 "AppIcon-iPad-40@2x.png"
+make_icon 76 "AppIcon-iPad-76@1x.png"
+make_icon 152 "AppIcon-iPad-76@2x.png"
+make_icon 167 "AppIcon-iPad-83.5@2x.png"
 make_icon 1024 "AppIcon-1024.png"
 
 cat > "$ICONSET/Contents.json" <<'JSON'
@@ -78,6 +87,60 @@ cat > "$ICONSET/Contents.json" <<'JSON'
       "size": "60x60",
       "scale": "3x",
       "filename": "AppIcon-60@3x.png"
+    },
+    {
+      "idiom": "ipad",
+      "size": "20x20",
+      "scale": "1x",
+      "filename": "AppIcon-iPad-20@1x.png"
+    },
+    {
+      "idiom": "ipad",
+      "size": "20x20",
+      "scale": "2x",
+      "filename": "AppIcon-iPad-20@2x.png"
+    },
+    {
+      "idiom": "ipad",
+      "size": "29x29",
+      "scale": "1x",
+      "filename": "AppIcon-iPad-29@1x.png"
+    },
+    {
+      "idiom": "ipad",
+      "size": "29x29",
+      "scale": "2x",
+      "filename": "AppIcon-iPad-29@2x.png"
+    },
+    {
+      "idiom": "ipad",
+      "size": "40x40",
+      "scale": "1x",
+      "filename": "AppIcon-iPad-40@1x.png"
+    },
+    {
+      "idiom": "ipad",
+      "size": "40x40",
+      "scale": "2x",
+      "filename": "AppIcon-iPad-40@2x.png"
+    },
+    {
+      "idiom": "ipad",
+      "size": "76x76",
+      "scale": "1x",
+      "filename": "AppIcon-iPad-76@1x.png"
+    },
+    {
+      "idiom": "ipad",
+      "size": "76x76",
+      "scale": "2x",
+      "filename": "AppIcon-iPad-76@2x.png"
+    },
+    {
+      "idiom": "ipad",
+      "size": "83.5x83.5",
+      "scale": "2x",
+      "filename": "AppIcon-iPad-83.5@2x.png"
     },
     {
       "idiom": "ios-marketing",
