@@ -34,8 +34,10 @@ const termsPanel = document.querySelector("#termsPanel");
 const paywallOverlay = document.querySelector("#paywallOverlay");
 const paywallCloseButton = document.querySelector("#paywallCloseButton");
 const unlockButton = document.querySelector("#unlockButton");
+const restorePurchaseButton = document.querySelector("#restorePurchaseButton");
 const paywallMessage = document.querySelector("#paywallMessage");
 
+const PREMIUM_PRODUCT_ID = "voltloop_full_unlock";
 const RECORD_KEY = "circuitGlowRecords.v1";
 const PURCHASE_KEY = "voltLoopPremiumUnlocked.v1";
 const UNLOCK_KEY = "voltLoopHighestUnlocked.v1";
@@ -531,6 +533,117 @@ function openPaywall(message = "Unlock VoltLoop Premium to continue beyond the f
   paywallMessage.textContent = message;
   paywallOverlay.classList.remove("is-hidden");
 }
+
+let purchaseSetupPromise = null;
+let purchaseInFlightResolver = null;
+
+function waitForPurchaseRuntime() {
+  if (window.CdvPurchase) return Promise.resolve();
+
+  return new Promise((resolve, reject) => {
+    const timeout = window.setTimeout(() => reject(new Error("Purchase plugin did not load.")), 9000);
+    document.addEventListener(
+      "deviceready",
+      () => {
+        window.clearTimeout(timeout);
+        if (window.CdvPurchase) resolve();
+        else reject(new Error("Purchase plugin is unavailable."));
+      },
+      { once: true },
+    );
+  });
+}
+
+function transactionIncludesPremium(transaction) {
+  return transaction?.products?.some((product) => product.id === PREMIUM_PRODUCT_ID) ?? false;
+}
+
+async function setupPurchases() {
+  if (purchaseSetupPromise) return purchaseSetupPromise;
+
+  purchaseSetupPromise = (async () => {
+    await waitForPurchaseRuntime();
+    const { store, ProductType, Platform } = window.CdvPurchase;
+
+    store.register([
+      {
+        id: PREMIUM_PRODUCT_ID,
+        type: ProductType.NON_CONSUMABLE,
+        platform: Platform.APPLE_APPSTORE,
+      },
+    ]);
+
+    store.when()
+      .approved(async (transaction) => {
+        if (!transactionIncludesPremium(transaction)) return;
+        setPremiumUnlocked();
+        await transaction.finish();
+        if (purchaseInFlightResolver) {
+          purchaseInFlightResolver({ success: true });
+          purchaseInFlightResolver = null;
+        }
+      })
+      .productUpdated((product) => {
+        if (product.id === PREMIUM_PRODUCT_ID && product.owned) {
+          setPremiumUnlocked();
+        }
+      });
+
+    store.error((error) => {
+      paywallMessage.textContent = error?.message || "Purchase could not be completed. Please try again.";
+      if (purchaseInFlightResolver) {
+        purchaseInFlightResolver({ success: false, error });
+        purchaseInFlightResolver = null;
+      }
+    });
+
+    await store.initialize([
+      {
+        platform: Platform.APPLE_APPSTORE,
+        options: { needAppReceipt: true },
+      },
+    ]);
+  })();
+
+  return purchaseSetupPromise;
+}
+
+window.VoltLoopPurchases = {
+  async purchasePremium(productId = PREMIUM_PRODUCT_ID) {
+    await setupPurchases();
+    const { store, Platform } = window.CdvPurchase;
+
+    if (store.owned(productId)) return { success: true };
+
+    const product = store.get(productId, Platform.APPLE_APPSTORE) || store.get(productId);
+    const offer = product?.getOffer?.();
+    if (!offer) throw new Error("Premium product is not available from the App Store yet.");
+
+    paywallMessage.textContent = "Opening App Store purchase sheet...";
+
+    return new Promise(async (resolve) => {
+      purchaseInFlightResolver = resolve;
+      const error = await offer.order();
+      if (error) {
+        purchaseInFlightResolver = null;
+        const cancelled = error.code === window.CdvPurchase.ErrorCode.PAYMENT_CANCELLED;
+        resolve({ success: false, cancelled, error });
+      }
+    });
+  },
+
+  async restorePremium() {
+    await setupPurchases();
+    const { store } = window.CdvPurchase;
+    paywallMessage.textContent = "Checking your App Store purchases...";
+    await store.restorePurchases();
+    if (store.owned(PREMIUM_PRODUCT_ID) || isPremiumUnlocked()) {
+      setPremiumUnlocked();
+      return { success: true };
+    }
+    return { success: false };
+  },
+};
 
 function saveRecord(result) {
   const key = `${currentDifficulty}-${currentLevel}`;
@@ -1117,22 +1230,40 @@ paywallOverlay.addEventListener("click", (event) => {
 
 unlockButton.addEventListener("click", async () => {
   playMenuSound();
-  if (!window.VoltLoopPurchases?.purchasePremium) {
-    paywallMessage.textContent = "In-App Purchase is not available in this build yet. Please try again from TestFlight after StoreKit is connected.";
-    return;
-  }
 
   try {
-    const result = await window.VoltLoopPurchases.purchasePremium("voltloop_full_unlock");
-    if (!result?.success) return;
+    const result = await window.VoltLoopPurchases.purchasePremium();
+    if (!result?.success) {
+      paywallMessage.textContent = result?.cancelled
+        ? "Purchase cancelled."
+        : "Purchase could not be completed. Please try again.";
+      return;
+    }
   } catch {
-    paywallMessage.textContent = "Purchase could not be completed. Please try again.";
+    paywallMessage.textContent = "In-App Purchase is not available yet. Check the App Store product setup, then try again from TestFlight.";
     return;
   }
 
   setPremiumUnlocked();
   paywallOverlay.classList.add("is-hidden");
   paywallMessage.textContent = "Premium unlocked on this device.";
+});
+
+restorePurchaseButton.addEventListener("click", async () => {
+  playMenuSound();
+  try {
+    const result = await window.VoltLoopPurchases.restorePremium();
+    if (!result?.success) {
+      paywallMessage.textContent = "No previous premium purchase was found for this Apple ID.";
+      return;
+    }
+  } catch {
+    paywallMessage.textContent = "Purchases could not be restored right now.";
+    return;
+  }
+
+  paywallOverlay.classList.add("is-hidden");
+  paywallMessage.textContent = "Premium restored on this device.";
 });
 
 renderLevelUI();
